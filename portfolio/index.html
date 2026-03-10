@@ -1,0 +1,1277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Melanie Travaglini — Diseñadora Creativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #0a0a0a;
+    --dark: #111111;
+    --card: #161616;
+    --pink: #f5a0b5;
+    --rose: #b5687a;
+    --dusty: #c4909f;
+    --light-pink: #fce4ea;
+    --white: #f0e8ec;
+    --muted: #6b5057;
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background-color: var(--black);
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom Cursor */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--pink);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease, background 0.3s ease;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid var(--rose);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: transform 0.15s ease, width 0.3s ease, height 0.3s ease;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--rose); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: linear-gradient(to bottom, rgba(10,10,10,0.95) 0%, transparent 100%);
+    backdrop-filter: blur(2px);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--pink);
+    letter-spacing: 0.05em;
+  }
+  .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    position: relative;
+  }
+  .nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 1px;
+    background: var(--pink);
+    transition: width 0.3s ease;
+  }
+  .nav-links a:hover { color: var(--pink); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 4rem;
+    position: relative;
+    z-index: 2;
+  }
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 2rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .hero-tag::before {
+    content: '';
+    width: 40px; height: 1px;
+    background: var(--rose);
+  }
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 900;
+    line-height: 0.95;
+    color: var(--white);
+    margin-bottom: 0.5rem;
+  }
+  .hero-name span {
+    color: transparent;
+    -webkit-text-stroke: 1px var(--pink);
+  }
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    font-style: italic;
+    color: var(--dusty);
+    margin-bottom: 2.5rem;
+    letter-spacing: 0.05em;
+  }
+  .hero-desc {
+    color: var(--muted);
+    font-size: 0.9rem;
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 3rem;
+  }
+  .hero-cta { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--pink);
+    color: var(--black);
+    padding: 0.85rem 2rem;
+    border: none;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-primary:hover { background: var(--light-pink); transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent;
+    color: var(--pink);
+    padding: 0.85rem 2rem;
+    border: 1px solid var(--rose);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: none;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .btn-outline:hover { background: rgba(245,160,181,0.08); transform: translateY(-2px); }
+  .hero-right {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .hero-visual {
+    position: relative;
+    width: 340px; height: 420px;
+  }
+  .avatar-frame {
+    width: 280px; height: 360px;
+    border: 1px solid var(--rose);
+    position: absolute;
+    top: 30px; left: 30px;
+    clip-path: polygon(0 0, calc(100% - 20px) 0, 100% 20px, 100% 100%, 20px 100%, 0 calc(100% - 20px));
+    background: linear-gradient(135deg, #1a0e12, #1f1215, #250f18);
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .avatar-initials {
+    font-family: 'Playfair Display', serif;
+    font-size: 7rem;
+    font-weight: 900;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(245,160,181,0.2);
+    position: absolute;
+    user-select: none;
+  }
+  .avatar-decoration {
+    position: absolute;
+    width: 100%; height: 100%;
+    background: radial-gradient(ellipse at 60% 40%, rgba(181,104,122,0.15) 0%, transparent 70%);
+  }
+  .avatar-mt {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--pink);
+    position: absolute;
+    bottom: 24px; right: 24px;
+    letter-spacing: 0.05em;
+  }
+  .hero-accent-box {
+    width: 80px; height: 80px;
+    border: 1px solid var(--rose);
+    position: absolute;
+    top: 0; left: 0;
+    opacity: 0.4;
+    animation: float 4s ease-in-out infinite;
+  }
+  .hero-accent-box2 {
+    width: 50px; height: 50px;
+    background: var(--rose);
+    position: absolute;
+    bottom: 0; right: 0;
+    opacity: 0.3;
+    animation: float 5s ease-in-out infinite reverse;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  .bg-circle { position: absolute; border-radius: 50%; pointer-events: none; }
+  .bg-c1 {
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(181,104,122,0.07) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    animation: pulse 6s ease-in-out infinite;
+  }
+  .bg-c2 {
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(245,160,181,0.05) 0%, transparent 70%);
+    bottom: 100px; left: 50px;
+    animation: pulse 8s ease-in-out infinite reverse;
+  }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.05); opacity: 0.7; }
+  }
+
+  /* SECTIONS */
+  section { padding: 6rem 4rem; position: relative; }
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--rose);
+    margin-bottom: 1rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1; max-width: 60px;
+    height: 1px; background: var(--rose);
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 3rem;
+  }
+  .section-title em { color: var(--pink); font-style: italic; }
+
+  /* ABOUT */
+  .about { background: var(--dark); }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: start;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .about-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.9; margin-bottom: 1.5rem; }
+  .about-text p strong { color: var(--dusty); font-weight: 500; }
+  .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-top: 2rem; }
+  .stat-card {
+    border: 1px solid rgba(181,104,122,0.2);
+    padding: 1.5rem;
+    background: var(--card);
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+    transition: border-color 0.3s ease;
+  }
+  .stat-card:hover { border-color: var(--rose); }
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--pink);
+    line-height: 1;
+    margin-bottom: 0.4rem;
+  }
+  .stat-label { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+  .about-skills h3 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 1.5rem; }
+  .skill-category { margin-bottom: 2rem; }
+  .skill-cat-label { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.8rem; }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .tag {
+    font-size: 0.75rem;
+    padding: 0.4rem 0.9rem;
+    border: 1px solid rgba(181,104,122,0.3);
+    color: var(--dusty);
+    background: rgba(181,104,122,0.05);
+    letter-spacing: 0.05em;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
+  }
+  .tag:hover { border-color: var(--pink); color: var(--pink); background: rgba(245,160,181,0.08); }
+
+  /* SERVICES */
+  .services { background: var(--black); }
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .service-card {
+    background: var(--card);
+    border: 1px solid rgba(181,104,122,0.15);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    clip-path: polygon(0 0, calc(100% - 16px) 0, 100% 16px, 100% 100%, 16px 100%, 0 calc(100% - 16px));
+  }
+  .service-card::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(181,104,122,0.08) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .service-card:hover { border-color: var(--rose); transform: translateY(-4px); }
+  .service-card:hover::before { opacity: 1; }
+  .service-icon { font-size: 2rem; margin-bottom: 1.2rem; display: block; }
+  .service-num {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem; font-weight: 900;
+    color: rgba(181,104,122,0.08);
+    line-height: 1;
+  }
+  .service-title { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--white); margin-bottom: 0.8rem; }
+  .service-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.7; }
+  .service-line { width: 30px; height: 2px; background: var(--rose); margin-bottom: 1.2rem; transition: width 0.3s ease; }
+  .service-card:hover .service-line { width: 60px; background: var(--pink); }
+
+  /* EXPERIENCE */
+  .experience { background: var(--dark); }
+  .exp-container { max-width: 800px; margin: 0 auto; }
+  .exp-item {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 2rem;
+    padding: 2rem 0;
+    border-bottom: 1px solid rgba(181,104,122,0.1);
+    position: relative;
+  }
+  .exp-item::before {
+    content: '';
+    position: absolute; left: 140px; top: 2rem;
+    width: 8px; height: 8px;
+    background: var(--rose);
+    border-radius: 50%;
+    transform: translateX(-4px);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .exp-item:hover::before { background: var(--pink); transform: translateX(-4px) scale(1.5); }
+  .exp-date { font-size: 0.75rem; color: var(--rose); letter-spacing: 0.05em; padding-top: 0.15rem; text-align: right; }
+  .exp-content { padding-left: 2rem; border-left: 1px solid rgba(181,104,122,0.2); }
+  .exp-role { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--white); margin-bottom: 0.2rem; }
+  .exp-company { font-size: 0.8rem; color: var(--dusty); letter-spacing: 0.05em; margin-bottom: 0.8rem; }
+  .exp-tasks { list-style: none; display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .exp-tasks li {
+    font-size: 0.75rem; color: var(--muted);
+    background: rgba(181,104,122,0.07);
+    padding: 0.25rem 0.7rem;
+    border: 1px solid rgba(181,104,122,0.15);
+  }
+
+  /* EDUCATION */
+  .education { background: var(--black); }
+  .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; max-width: 900px; margin: 0 auto; }
+  .edu-card {
+    background: var(--card);
+    border: 1px solid rgba(181,104,122,0.15);
+    padding: 2rem;
+    transition: all 0.3s ease;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+  }
+  .edu-card:hover { border-color: var(--rose); }
+  .edu-type { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.8rem; }
+  .edu-title { font-family: 'Playfair Display', serif; font-size: 1rem; color: var(--white); margin-bottom: 0.3rem; line-height: 1.3; }
+  .edu-institution { font-size: 0.8rem; color: var(--dusty); margin-bottom: 0.8rem; }
+  .edu-status {
+    display: inline-block;
+    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid var(--rose); color: var(--rose);
+  }
+  .edu-status.active { border-color: var(--pink); color: var(--pink); background: rgba(245,160,181,0.07); }
+
+  /* CONTACT */
+  .contact { background: var(--dark); }
+  .contact-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+  .contact-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.9; margin-bottom: 3rem; max-width: 520px; margin-left: auto; margin-right: auto; }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 0.7rem;
+    color: var(--dusty); text-decoration: none;
+    font-size: 0.82rem; padding: 0.8rem 1.4rem;
+    border: 1px solid rgba(181,104,122,0.2);
+    background: var(--card);
+    transition: all 0.3s ease; letter-spacing: 0.04em;
+    clip-path: polygon(0 0, calc(100% - 10px) 0, 100% 10px, 100% 100%, 10px 100%, 0 calc(100% - 10px));
+  }
+  .contact-link:hover { border-color: var(--pink); color: var(--pink); background: rgba(245,160,181,0.05); transform: translateY(-3px); }
+  .contact-link-icon { font-size: 1rem; flex-shrink: 0; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black);
+    border-top: 1px solid rgba(181,104,122,0.1);
+    padding: 2.5rem 4rem;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--pink); }
+  .footer-copy { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  /* WORKS */
+  .works { background: var(--black); }
+  .works-filters { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 3rem; }
+  .filter-btn {
+    font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase;
+    padding: 0.45rem 1.1rem;
+    border: 1px solid rgba(181,104,122,0.25);
+    background: transparent; color: var(--muted);
+    cursor: none; transition: all 0.25s ease;
+    font-family: 'DM Sans', sans-serif;
+    clip-path: polygon(0 0, calc(100% - 7px) 0, 100% 7px, 100% 100%, 7px 100%, 0 calc(100% - 7px));
+  }
+  .filter-btn:hover, .filter-btn.active { border-color: var(--pink); color: var(--pink); background: rgba(245,160,181,0.06); }
+  .works-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  .work-card {
+    background: var(--card);
+    border: 1px solid rgba(181,104,122,0.12);
+    overflow: hidden;
+    position: relative;
+    transition: all 0.4s ease;
+    clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 14px, 100% 100%, 14px 100%, 0 calc(100% - 14px));
+    cursor: none;
+  }
+  .work-card:hover { border-color: var(--rose); transform: translateY(-5px); }
+  .work-card.hidden { display: none; }
+  .work-thumb {
+    width: 100%;
+    aspect-ratio: 4/3;
+    background: var(--dark);
+    position: relative;
+    overflow: hidden;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .work-thumb img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+    pointer-events: none;
+  }
+  .work-thumb video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .work-card:hover .work-thumb img { transform: scale(1.05); }
+  .work-placeholder {
+    width: 100%; height: 100%;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.8rem;
+    background: linear-gradient(135deg, #161616, #1a0e12);
+    transition: background 0.4s ease;
+  }
+  .work-card:hover .work-placeholder { background: linear-gradient(135deg, #1f0e14, #200f16); }
+  .work-placeholder-icon { font-size: 2rem; color: rgba(181,104,122,0.25); transition: color 0.3s ease; }
+  .work-card:hover .work-placeholder-icon { color: rgba(245,160,181,0.4); }
+  .work-placeholder-text { font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(181,104,122,0.3); }
+  .work-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(10,10,10,0.85) 0%, transparent 60%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex; align-items: flex-end;
+    padding: 1.2rem;
+    pointer-events: none;
+  }
+  .work-card:hover .work-overlay { opacity: 1; }
+  .work-overlay-label { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--pink); }
+  .work-info { padding: 1.2rem 1.4rem 1.4rem; }
+  .work-cat { font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--rose); margin-bottom: 0.35rem; }
+  .work-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; color: var(--white); line-height: 1.3; }
+
+  /* DIVIDER */
+  .divider-line { width: 60px; height: 1px; background: linear-gradient(to right, var(--rose), var(--pink)); margin: 0 auto 3rem; }
+
+  /* ANIMATIONS */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .hero-left > * { opacity: 0; animation: fadeInUp 0.8s ease forwards; }
+  .hero-tag { animation-delay: 0.1s; }
+  .hero-name { animation-delay: 0.25s; }
+  .hero-title { animation-delay: 0.4s; }
+  .hero-desc { animation-delay: 0.55s; }
+  .hero-cta { animation-delay: 0.7s; }
+  .hero-visual { animation: fadeInUp 0.8s ease 0.5s forwards; opacity: 0; }
+
+  /* Marquee */
+  .marquee-section {
+    background: var(--rose);
+    padding: 1rem 0;
+    overflow: hidden;
+    border-top: 1px solid var(--dusty);
+    border-bottom: 1px solid var(--dusty);
+  }
+  .marquee-track {
+    display: flex; gap: 0;
+    animation: marquee 20s linear infinite;
+    white-space: nowrap;
+  }
+  .marquee-track span {
+    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+    color: var(--black); font-weight: 500; padding: 0 3rem; opacity: 0.8;
+  }
+  .marquee-sep { color: var(--black) !important; opacity: 1 !important; }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* =====================
+     LIGHTBOX
+  ===================== */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.93);
+    z-index: 8000;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    cursor: none;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox-inner {
+    position: relative;
+    max-width: 90vw;
+    max-height: 88vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-inner img {
+    max-width: 88vw;
+    max-height: 82vh;
+    display: block;
+    border: 1px solid var(--rose);
+    box-shadow: 0 0 60px rgba(181,104,122,0.15);
+  }
+  .lightbox-inner video {
+    max-width: 88vw;
+    max-height: 82vh;
+    display: block;
+    border: 1px solid var(--rose);
+    box-shadow: 0 0 60px rgba(181,104,122,0.15);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    background: none;
+    border: none;
+    color: var(--pink);
+    font-size: 0.8rem;
+    cursor: none;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .lightbox-close:hover { color: var(--white); }
+  .lightbox-close-x {
+    font-size: 1.2rem;
+    line-height: 1;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 1.5rem 2rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-left { padding: 7rem 2rem 3rem; }
+    .hero-right { display: none; }
+    section { padding: 4rem 2rem; }
+    .about-grid, .contact-inner, .edu-grid { grid-template-columns: 1fr; gap: 3rem; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .exp-item { grid-template-columns: 1fr; }
+    .exp-content { border-left: none; padding-left: 0; border-top: 1px solid rgba(181,104,122,0.2); padding-top: 1rem; }
+    .exp-item::before { display: none; }
+    .exp-date { text-align: left; }
+    footer { flex-direction: column; gap: 1rem; text-align: center; }
+  }
+  @media (max-width: 600px) {
+    .services-grid { grid-template-columns: 1fr; }
+    .hero-name { font-size: 3rem; }
+    .works-grid { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 400px) {
+    .works-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner" id="lightboxInner">
+    <button class="lightbox-close" id="lightboxClose">
+      <span class="lightbox-close-x">✕</span> cerrar
+    </button>
+    <!-- contenido se inserta por JS -->
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">MT.</div>
+  <ul class="nav-links">
+    <li><a href="#about">Sobre mí</a></li>
+    <li><a href="#servicios">Expertise</a></li>
+    <li><a href="#trabajos">Trabajos</a></li>
+    <li><a href="#experiencia">Experiencia</a></li>
+    <li><a href="#educacion">Educación</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="inicio">
+  <div class="bg-circle bg-c1"></div>
+  <div class="bg-circle bg-c2"></div>
+  <div class="hero-left">
+    <p class="hero-tag">Diseñadora Creativa & Visual</p>
+    <h1 class="hero-name">
+      Melanie<br>
+      <span>Trava</span>glini
+    </h1>
+    <p class="hero-title">— Diseño que cuenta historias</p>
+    <p class="hero-desc">
+      Estudiante de Artes Multimediales con experiencia en diseño gráfico, UX/UI,
+      edición audiovisual y diseño web. Apasionada por crear piezas visuales
+      que comunican, emocionan y tienen impacto real.
+    </p>
+    <div class="hero-cta">
+      <a href="https://www.behance.net/melukook" target="_blank" class="btn-primary">Ver mis trabajos</a>
+      <a href="#about" class="btn-outline">Conocerme</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-visual">
+      <div class="hero-accent-box"></div>
+      <div class="avatar-frame">
+  <img src="imagenes/imagen.jpeg" alt="Melanie Travaglini" 
+       style="width:100%; height:100%; object-fit:cover; object-position:center top;">
+</div>
+      <div class="hero-accent-box2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-section">
+  <div class="marquee-track">
+    <span>Diseño Gráfico</span><span class="marquee-sep">✦</span>
+    <span>UX / UI</span><span class="marquee-sep">✦</span>
+    <span>Motion Graphics</span><span class="marquee-sep">✦</span>
+    <span>Diseño Web</span><span class="marquee-sep">✦</span>
+    <span>Edición de Video</span><span class="marquee-sep">✦</span>
+    <span>Artes Multimediales</span><span class="marquee-sep">✦</span>
+    <span>Identidad Visual</span><span class="marquee-sep">✦</span>
+    <span>Adobe Suite</span><span class="marquee-sep">✦</span>
+    <span>Figma</span><span class="marquee-sep">✦</span>
+    <span>Diseño Gráfico</span><span class="marquee-sep">✦</span>
+    <span>UX / UI</span><span class="marquee-sep">✦</span>
+    <span>Motion Graphics</span><span class="marquee-sep">✦</span>
+    <span>Diseño Web</span><span class="marquee-sep">✦</span>
+    <span>Edición de Video</span><span class="marquee-sep">✦</span>
+    <span>Artes Multimediales</span><span class="marquee-sep">✦</span>
+    <span>Identidad Visual</span><span class="marquee-sep">✦</span>
+    <span>Adobe Suite</span><span class="marquee-sep">✦</span>
+    <span>Figma</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Sobre mí</p>
+    <h2 class="section-title">Creatividad con <em>propósito</em></h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Soy <strong>Melanie Travaglini</strong>, diseñadora visual y estudiante de Licenciatura en Artes Multimediales en la Universidad Nacional de las Artes. Me especializo en crear piezas visuales que combinan estética, funcionalidad y narrativa.</p>
+        <p>Mi experiencia abarca desde el <strong>diseño gráfico e identidad de marca</strong> hasta <strong>UX/UI, diseño web, edición audiovisual y motion graphics</strong>. Trabajo con precisión y creatividad, siempre orientada a comunicar con impacto.</p>
+        <p>Busco desarrollarme profesionalmente en equipos de diseño donde pueda seguir creciendo, aportar ideas frescas y llevar proyectos visuales al siguiente nivel.</p>
+        <div class="about-stats">
+          <div class="stat-card">
+            <div class="stat-number">3+</div>
+            <div class="stat-label">Años de experiencia</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">∞</div>
+            <div class="stat-label">Proyectos creativos</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">6+</div>
+            <div class="stat-label">Disciplinas de diseño</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">2</div>
+            <div class="stat-label">Cursos especializados UX/UI</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-skills">
+        <h3>Herramientas & Habilidades</h3>
+        <div class="skill-category">
+          <p class="skill-cat-label">Diseño Visual</p>
+          <div class="skill-tags">
+            <span class="tag">Adobe Photoshop</span>
+            <span class="tag">Adobe Illustrator</span>
+            <span class="tag">Adobe InDesign</span>
+            <span class="tag">Canva</span>
+            <span class="tag">Figma</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <p class="skill-cat-label">Audiovisual & Motion</p>
+          <div class="skill-tags">
+            <span class="tag">Adobe Premiere</span>
+            <span class="tag">After Effects</span>
+            <span class="tag">CapCut</span>
+            <span class="tag">Flyers & Piezas</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <p class="skill-cat-label">UX / UI & Web</p>
+          <div class="skill-tags">
+            <span class="tag">Diseño UX/UI</span>
+            <span class="tag">Wireframing</span>
+            <span class="tag">Prototipado</span>
+            <span class="tag">Diseño Web</span>
+            <span class="tag">HTML / CSS</span>
+          </div>
+        </div>
+        <div class="skill-category">
+          <p class="skill-cat-label">Digital & Marketing</p>
+          <div class="skill-tags">
+            <span class="tag">Community Management</span>
+            <span class="tag">Redes Sociales</span>
+            <span class="tag">Data Entry</span>
+            <span class="tag">Office Suite</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="servicios">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Áreas de expertise</p>
+    <h2 class="section-title">En lo que <em>me especializo</em></h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="service-num">01</span>
+        <div class="service-line"></div>
+        <span class="service-icon">✦</span>
+        <h3 class="service-title">Diseño Gráfico</h3>
+        <p class="service-desc">Identidad visual, branding, flyers y piezas para redes. Manejo Adobe Suite completo: Photoshop, Illustrator, InDesign y Canva.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">02</span>
+        <div class="service-line"></div>
+        <span class="service-icon">◈</span>
+        <h3 class="service-title">Diseño UX / UI</h3>
+        <p class="service-desc">Wireframes, prototipos interactivos y diseño de interfaces en Figma. Cursé UX/UI y UX/UI Avanzado en Coderhouse (2022).</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">03</span>
+        <div class="service-line"></div>
+        <span class="service-icon">▶</span>
+        <h3 class="service-title">Edición de Video</h3>
+        <p class="service-desc">Edición audiovisual con Premiere y After Effects para contenido de marcas, redes sociales y materiales digitales.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">04</span>
+        <div class="service-line"></div>
+        <span class="service-icon">◉</span>
+        <h3 class="service-title">Motion Graphics</h3>
+        <p class="service-desc">Animaciones, intros y piezas en movimiento. Experiencia creando contenido dinámico para comunicación digital.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">05</span>
+        <div class="service-line"></div>
+        <span class="service-icon">⬡</span>
+        <h3 class="service-title">Diseño Web</h3>
+        <p class="service-desc">Diseño y maquetado de páginas web para distintos tipos de clientes. Formación en Diseño Web (UNTREF) y HTML/CSS.</p>
+      </div>
+      <div class="service-card">
+        <span class="service-num">06</span>
+        <div class="service-line"></div>
+        <span class="service-icon">✿</span>
+        <h3 class="service-title">Multimedia & RRSS</h3>
+        <p class="service-desc">Creación de contenido visual, community management y gestión de redes. Enfoque en estética, consistencia y alcance.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WORKS -->
+<section class="works" id="trabajos">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Portfolio</p>
+    <h2 class="section-title">Mis <em>trabajos</em></h2>
+
+    <div class="works-filters">
+      <button class="filter-btn active" onclick="filterWorks('all', this)">Todos</button>
+      <button class="filter-btn" onclick="filterWorks('grafico', this)">Diseño Gráfico</button>
+      <button class="filter-btn" onclick="filterWorks('uxui', this)">UX / UI</button>
+      <button class="filter-btn" onclick="filterWorks('video', this)">Edición de Video</button>
+      <button class="filter-btn" onclick="filterWorks('motion', this)">Motion</button>
+      <button class="filter-btn" onclick="filterWorks('web', this)">Diseño Web</button>
+      <button class="filter-btn" onclick="filterWorks('rrss', this)">Redes Sociales</button>
+    </div>
+
+    <div class="works-grid">
+
+      <!-- Slot 1 — imagen -->
+      <div class="work-card" data-cat="grafico" data-href="imagenes/foto1.jpg" data-type="image">
+        <div class="work-thumb">
+          <img src="imagenes/foto1.jpg" alt="La noche de los lápices">
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Diseño Gráfico</p>
+          <h3 class="work-title">La noche de los lápices - TP Universitario</h3>
+        </div>
+      </div>
+
+      <!-- Slot 2 — imagen -->
+      <div class="work-card" data-cat="uxui" data-href="imagenes/INICIO.png" data-type="image">
+        <div class="work-thumb">
+          <img src="imagenes/INICIO.png" alt="Blog web Inst. de Yoga">
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">UX / UI</p>
+          <h3 class="work-title">Proyecto Blog web Inst. de Yoga - Luciana Rey Reyes</h3>
+        </div>
+      </div>
+
+      <!-- Slot 3 — video -->
+      <div class="work-card" data-cat="video" data-href="videos/publicidad.mp4" data-type="video">
+        <div class="work-thumb">
+          <video muted loop>
+            <source src="videos/publicidad.mp4" type="video/mp4">
+          </video>
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Edición de Video</p>
+          <h3 class="work-title">Video publicitario para emprendimiento de tazas - Mebi personalizados</h3>
+        </div>
+      </div>
+
+      <!-- Slot 4 — video -->
+      <div class="work-card" data-cat="motion" data-href="videos/motion.mp4" data-type="video">
+        <div class="work-thumb">
+          <video muted loop>
+            <source src="videos/motion.mp4" type="video/mp4">
+          </video>
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Motion</p>
+          <h3 class="work-title">TP UNIVERSITARIO - Stop Motion</h3>
+        </div>
+      </div>
+
+      <!-- Slot 5 — imagen -->
+      <div class="work-card" data-cat="web" data-href="imagenes/premios.png" data-type="image">
+        <div class="work-thumb">
+          <img src="imagenes/premios.png" alt="Diseño web Feid">
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Diseño Web</p>
+          <h3 class="work-title">TP FINAL UNIVERSITARIO - Diseño web sobre el artista Feid</h3>
+        </div>
+      </div>
+
+      <!-- Slot 6 — imagen -->
+      <div class="work-card" data-cat="rrss" data-href="imagenes/mebi.png" data-type="image">
+        <div class="work-thumb">
+          <img src="imagenes/mebi.png" alt="Mebi personalizados">
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Redes Sociales</p>
+          <h3 class="work-title">Mebi personalizados organización para Instagram</h3>
+        </div>
+      </div>
+
+      <!-- Slot 7 — imagen -->
+      <div class="work-card" data-cat="grafico" data-href="imagenes/anamorfosis.jpg" data-type="image">
+        <div class="work-thumb">
+          <img src="imagenes/anamorfosis.jpg" alt="Anamorfosis">
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Diseño Gráfico</p>
+          <h3 class="work-title">TP UNIVERSITARIO - Noche de los lápices Anamorfosis</h3>
+        </div>
+      </div>
+
+      <!-- Slot 8 — video -->
+      <div class="work-card" data-cat="video" data-href="videos/rotoscopia.mp4" data-type="video">
+        <div class="work-thumb">
+          <video muted loop>
+            <source src="videos/rotoscopia.mp4" type="video/mp4">
+          </video>
+          <div class="work-overlay"><span class="work-overlay-label">Ver proyecto</span></div>
+        </div>
+        <div class="work-info">
+          <p class="work-cat">Edición de Video</p>
+          <h3 class="work-title">TP FINAL UNIVERSITARIO - Proyecto Visual 1</h3>
+        </div>
+      </div>
+
+    </div><!-- /works-grid -->
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experiencia">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Trayectoria</p>
+    <h2 class="section-title">Experiencia <em>laboral</em></h2>
+    <div class="exp-container">
+      <div class="exp-item">
+        <div class="exp-date">Ene 2024<br>Dic 2025</div>
+        <div class="exp-content">
+          <h3 class="exp-role">Auxiliar Jr. & Diseñadora</h3>
+          <p class="exp-company">Studio Dharma — Lotus Luck</p>
+          <ul class="exp-tasks">
+            <li>Diseño visual y audiovisual</li>
+            <li>Diseño web para clientes</li>
+            <li>Atención al cliente</li>
+            <li>Data Entry</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Oct 2022<br>May 2023</div>
+        <div class="exp-content">
+          <h3 class="exp-role">Vendedora / Cajera</h3>
+          <p class="exp-company">Lolamosha Lingerie (SweetVictorian)</p>
+          <ul class="exp-tasks">
+            <li>Atención al cliente</li>
+            <li>Control de stock</li>
+            <li>Sistema Lince</li>
+            <li>Manejo de caja y posnet</li>
+          </ul>
+        </div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-date">Ago 2020<br>Jul 2022</div>
+        <div class="exp-content">
+          <h3 class="exp-role">Asistente Administrativa</h3>
+          <p class="exp-company">Contadora Pública Mónica V. Quacquarini</p>
+          <ul class="exp-tasks">
+            <li>Gestión comercial</li>
+            <li>Atención de clientes</li>
+            <li>Rendición de gastos</li>
+            <li>Organización de archivo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="education" id="educacion">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Formación</p>
+    <h2 class="section-title">Educación & <em>Cursos</em></h2>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <p class="edu-type">Formación universitaria</p>
+        <h3 class="edu-title">Licenciatura en Artes Multimediales</h3>
+        <p class="edu-institution">Universidad Nacional de las Artes</p>
+        <span class="edu-status active">En curso</span>
+      </div>
+      <div class="edu-card">
+        <p class="edu-type">Educación secundaria</p>
+        <h3 class="edu-title">Bachiller con orientación en informática aplicada</h3>
+        <p class="edu-institution">Colegio Instituto Don Orione</p>
+        <span class="edu-status">Completado</span>
+      </div>
+      <div class="edu-card">
+        <p class="edu-type">Curso especializado · Coderhouse</p>
+        <h3 class="edu-title">Diseño UX/UI</h3>
+        <p class="edu-institution">Coderhouse · 2022</p>
+        <span class="edu-status">Completado</span>
+      </div>
+      <div class="edu-card">
+        <p class="edu-type">Curso especializado · Coderhouse</p>
+        <h3 class="edu-title">Diseño UX/UI Avanzado</h3>
+        <p class="edu-institution">Coderhouse · 2022</p>
+        <span class="edu-status">Completado</span>
+      </div>
+      <div class="edu-card">
+        <p class="edu-type">Curso · UNTREF</p>
+        <h3 class="edu-title">Diseño Web</h3>
+        <p class="edu-institution">Universidad Nacional de Tres de Febrero</p>
+        <span class="edu-status active">En curso</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contacto">
+  <div style="max-width:1100px; margin:0 auto;">
+    <p class="section-label">Contacto</p>
+    <h2 class="section-title" style="text-align:center;">¿Querés <em>contactarme?</em></h2>
+    <div class="divider-line"></div>
+    <div class="contact-inner">
+      <div class="contact-text">
+        <p>Podés encontrarme y ver más de mi trabajo en los siguientes links. Estoy abierta a nuevas oportunidades laborales en diseño o edición.</p>
+      </div>
+      <div class="contact-links">
+        <a href="mailto:melanietravaglini@gmail.com" class="contact-link">
+          <span class="contact-link-icon">✉</span>
+          melanietravaglini@gmail.com
+        </a>
+        <a href="tel:+541160598814" class="contact-link">
+          <span class="contact-link-icon">☎</span>
+          +1160598814
+        </a>
+        <a href="https://www.behance.net/melukook" target="_blank" class="contact-link">
+          <span class="contact-link-icon">◈</span>
+          Behance — Portfolio de trabajos
+        </a>
+        <a href="https://github.com/MelanieTravaglini" target="_blank" class="contact-link">
+          <span class="contact-link-icon">⬡</span>
+          GitHub — Proyectos web
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Melanie Travaglini.</div>
+  <p class="footer-copy">© 2026 — Diseñadora Creativa · Villa del Parque, CABA ✦</p>
+</footer>
+
+<script>
+  /* =====================
+     FILTER WORKS
+  ===================== */
+  function filterWorks(cat, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.work-card').forEach(card => {
+      if (cat === 'all' || card.dataset.cat === cat) {
+        card.classList.remove('hidden');
+        card.style.animation = 'fadeInUp 0.4s ease forwards';
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+
+  /* =====================
+     LIGHTBOX
+  ===================== */
+  const lightbox     = document.getElementById('lightbox');
+  const lightboxInner = document.getElementById('lightboxInner');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  // Click en cualquier work-card abre el lightbox
+  document.querySelectorAll('.work-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const href = card.dataset.href;
+      const type = card.dataset.type;
+      if (!href) return;
+
+      // Limpiar contenido anterior (guardar el botón cerrar)
+      lightboxInner.innerHTML = '';
+      lightboxInner.appendChild(lightboxClose);
+
+      if (type === 'video') {
+        const vid = document.createElement('video');
+        vid.controls = true;
+        vid.autoplay  = true;
+        const src = document.createElement('source');
+        src.src  = href;
+        src.type = 'video/mp4';
+        vid.appendChild(src);
+        lightboxInner.appendChild(vid);
+      } else {
+        const img = document.createElement('img');
+        img.src = href;
+        img.alt = 'Proyecto';
+        lightboxInner.appendChild(img);
+      }
+
+      lightbox.classList.add('open');
+      document.body.style.overflow = 'hidden'; // bloquear scroll
+    });
+  });
+
+  // Cerrar con botón
+  lightboxClose.addEventListener('click', closeLightbox);
+
+  // Cerrar haciendo click fuera del contenido
+  lightbox.addEventListener('click', e => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  // Cerrar con Escape
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  function closeLightbox() {
+    // Pausar video si existe
+    const vid = lightboxInner.querySelector('video');
+    if (vid) vid.pause();
+    lightbox.classList.remove('open');
+    document.body.style.overflow = ''; // restaurar scroll
+  }
+
+  /* =====================
+     CUSTOM CURSOR
+  ===================== */
+  const cursor = document.getElementById('cursor');
+  const ring   = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top  = my + 'px';
+  });
+
+  function animRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top  = ry + 'px';
+    requestAnimationFrame(animRing);
+  }
+  animRing();
+
+  document.querySelectorAll('a, button, .service-card, .stat-card, .edu-card, .work-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.width  = '20px';
+      cursor.style.height = '20px';
+      cursor.style.background = 'var(--light-pink)';
+      ring.style.width  = '50px';
+      ring.style.height = '50px';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.width  = '12px';
+      cursor.style.height = '12px';
+      cursor.style.background = 'var(--pink)';
+      ring.style.width  = '36px';
+      ring.style.height = '36px';
+    });
+  });
+
+  /* =====================
+     SCROLL REVEAL
+  ===================== */
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity   = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.service-card, .edu-card, .stat-card, .exp-item, .work-card').forEach(el => {
+    el.style.opacity   = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+
+  /* Play video preview on hover */
+  document.querySelectorAll('.work-thumb video').forEach(vid => {
+    const card = vid.closest('.work-card');
+    card.addEventListener('mouseenter', () => vid.play());
+    card.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = 0; });
+  });
+</script>
+</body>
+</html>
